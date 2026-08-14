@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  BackupPetti Box — macOS launchd LaunchAgent (reference copy).
+
+  The install-mac.sh script writes this for you (with your paths filled in) to
+  ~/Library/LaunchAgents/com.backuppetti.box.plist. It's kept here so you can see
+  exactly what gets installed, or set it up by hand.
+
+  Manual setup:
+    cp com.backuppetti.box.plist ~/Library/LaunchAgents/
+    nano ~/Library/LaunchAgents/com.backuppetti.box.plist   # fix the two paths below
+    launchctl load ~/Library/LaunchAgents/com.backuppetti.box.plist
+
+  RunAtLoad = start at login. KeepAlive = restart it if it ever stops.
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.backuppetti.box</string>
+    <key>ProgramArguments</key>
+    <array>
+        <!-- Full path to the agent you downloaded and marked executable: -->
+        <string>/Users/CHANGE_ME/Library/Application Support/BackupPetti/backuppetti-agent</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/Users/CHANGE_ME/Library/Application Support/BackupPetti/box.log</string>
+    <key>StandardErrorPath</key>
+    <string>/Users/CHANGE_ME/Library/Application Support/BackupPetti/box.log</string>
+</dict>
+</plist>

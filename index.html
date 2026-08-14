@@ -82,11 +82,16 @@
           <a class="plat" href="https://github.com/datahegemon-dotcom/backuppetti-pc/releases/latest/download/backuppetti-agent-macos-amd64">🍎 Mac<small>Intel</small></a>
         </div>
         <div class="note2">
-          These download as a plain program (no installer). Open a <b>Terminal</b> in your
-          Downloads folder and run:<br>
-          <code>chmod +x ./backuppetti-agent-*</code> &nbsp;then&nbsp; <code>./backuppetti-agent-*</code><br>
-          Then open <code>http://localhost:8088</code> in your browser and follow the same three
-          steps below.<br><br>
+          <b>🍓 Raspberry Pi / Linux — easiest way (also starts on boot):</b><br>
+          Open a <b>Terminal</b> and paste this one line:<br>
+          <code>curl -fsSL https://datahegemon-dotcom.github.io/backuppetti-pc/install-pi.sh | sudo bash</code><br>
+          It installs the Box and sets it to launch automatically every time the machine powers on —
+          then open <code>http://localhost:8088</code> and follow the three steps below.
+          (<a href="https://github.com/datahegemon-dotcom/backuppetti-pc/blob/main/install-pi.sh">see the script</a>)
+          <br><br>
+          <b>Or run it by hand (any of the above):</b> open a Terminal in your Downloads folder and run
+          <code>chmod +x ./backuppetti-agent-*</code> then <code>./backuppetti-agent-*</code>, then open
+          <code>http://localhost:8088</code>.<br><br>
           <b>On a Mac</b>, if it says the app can't be opened, run once:
           <code>xattr -d com.apple.quarantine ./backuppetti-agent-*</code><br>
           <b>On Linux / Pi</b>, your USB drive is usually at a path like

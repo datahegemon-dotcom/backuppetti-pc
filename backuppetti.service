@@ -1,0 +1,28 @@
+# BackupPetti Box — systemd service (reference copy).
+#
+# The install-pi.sh script writes this file for you (with your username filled
+# in) to /etc/systemd/system/backuppetti.service. It's kept here so you can see
+# exactly what gets installed, or set it up by hand if you prefer.
+#
+# Manual setup:
+#   sudo cp backuppetti.service /etc/systemd/system/backuppetti.service
+#   sudo nano /etc/systemd/system/backuppetti.service   # set User= and ExecStart=
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now backuppetti
+
+[Unit]
+Description=BackupPetti Box — backup agent for the BackupPetti phone app
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# The account that owns the config and the mounted USB drive (e.g. pi):
+User=CHANGE_ME
+# Full path to the agent you downloaded and marked executable:
+ExecStart=/opt/backuppetti/backuppetti-agent
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

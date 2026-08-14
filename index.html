@@ -41,6 +41,18 @@
   .safe .row { display:flex; gap:10px; align-items:flex-start; }
   .safe .ic { font-size:18px; }
   .foot { text-align:center; font-size:12.5px; color:#8A968F; padding:22px 30px; }
+  details.more { margin-top:16px; border-top:1px solid #E3EBE8; padding-top:14px; }
+  details.more summary { cursor:pointer; font-size:14px; font-weight:700; color:#0C7A54;
+    text-align:center; list-style:none; }
+  details.more summary::-webkit-details-marker { display:none; }
+  .platgrid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:14px; }
+  a.plat { display:block; text-align:center; text-decoration:none; background:#EAF5F0; color:#0E2B23;
+    border:1px solid #CDE7DC; border-radius:12px; padding:12px 10px; font-weight:700; font-size:14px; }
+  a.plat:hover { background:#DBEDE4; }
+  a.plat small { display:block; font-weight:600; color:#5B6C64; font-size:12px; margin-top:2px; }
+  .note2 { font-size:13px; color:#4B5B54; background:#F5F8F7; border-radius:12px; padding:14px; margin-top:14px; }
+  .note2 code { background:#0E2B23; color:#d5f5e8; padding:2px 6px; border-radius:5px; font-size:12.5px; }
+  .note2 b { color:#0E2B23; }
 </style>
 </head>
 <body>
@@ -60,6 +72,27 @@
         </a>
         <div class="free">Free · works on Windows 10 &amp; 11 · about 13 MB</div>
       </div>
+
+      <details class="more">
+        <summary>On Linux, Raspberry Pi or Mac? &nbsp;▾</summary>
+        <div class="platgrid">
+          <a class="plat" href="https://github.com/datahegemon-dotcom/backuppetti-pc/releases/latest/download/backuppetti-agent-linux-amd64">🐧 Linux PC<small>Intel / AMD 64-bit</small></a>
+          <a class="plat" href="https://github.com/datahegemon-dotcom/backuppetti-pc/releases/latest/download/backuppetti-agent-linux-arm64">🍓 Raspberry Pi<small>64-bit Raspberry Pi OS</small></a>
+          <a class="plat" href="https://github.com/datahegemon-dotcom/backuppetti-pc/releases/latest/download/backuppetti-agent-macos-arm64">🍎 Mac<small>Apple Silicon (M1–M4)</small></a>
+          <a class="plat" href="https://github.com/datahegemon-dotcom/backuppetti-pc/releases/latest/download/backuppetti-agent-macos-amd64">🍎 Mac<small>Intel</small></a>
+        </div>
+        <div class="note2">
+          These download as a plain program (no installer). Open a <b>Terminal</b> in your
+          Downloads folder and run:<br>
+          <code>chmod +x ./backuppetti-agent-*</code> &nbsp;then&nbsp; <code>./backuppetti-agent-*</code><br>
+          Then open <code>http://localhost:8088</code> in your browser and follow the same three
+          steps below.<br><br>
+          <b>On a Mac</b>, if it says the app can't be opened, run once:
+          <code>xattr -d com.apple.quarantine ./backuppetti-agent-*</code><br>
+          <b>On Linux / Pi</b>, your USB drive is usually at a path like
+          <code>/media/you/USB</code> — if it isn't in the drive list, just type that path in Step 1.
+        </div>
+      </details>
 
       <h2>How to set it up</h2>
       <ol>

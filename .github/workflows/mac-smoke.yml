@@ -1,0 +1,79 @@
+name: Mac smoke test
+
+# Runs the phone's pair -> upload -> verify flow against the real macOS agent,
+# on Apple Silicon and Intel, using GitHub's Mac runners. Manual trigger.
+on:
+  workflow_dispatch:
+
+jobs:
+  mac:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-14      # Apple Silicon (arm64)
+            asset: backuppetti-agent-macos-arm64
+          - runner: macos-13      # Intel (x86_64)
+            asset: backuppetti-agent-macos-amd64
+    runs-on: ${{ matrix.runner }}
+    steps:
+      - name: Download the released agent
+        run: |
+          curl -fsSL -o agent \
+            "https://github.com/datahegemon-dotcom/backuppetti-pc/releases/latest/download/${{ matrix.asset }}"
+          chmod +x agent
+          file agent
+
+      - name: Start it (as a user would after clearing quarantine)
+        run: |
+          ./agent > agent.log 2>&1 &
+          echo $! > agent.pid
+          for i in $(seq 1 20); do
+            if curl -s -o /dev/null http://localhost:8088/; then echo "up"; break; fi
+            sleep 1
+          done
+          echo "----- agent.log -----"; cat agent.log
+
+      - name: Phone flow — pair, upload, verify, 401
+        run: |
+          set -e
+          B=http://localhost:8088
+          DRIVE="$HOME/bp-drive"; mkdir -p "$DRIVE"
+
+          echo "== dashboard + grid =="
+          test "$(curl -s -o /dev/null -w '%{http_code}' $B/)" = 200
+          test "$(curl -s $B/ | grep -c 'class=.folders.')" = 1
+          echo "  PASS dashboard 200 + folder grid"
+
+          echo "== drive, folder, QR =="
+          curl -s -o /dev/null -X POST --data-urlencode "drive=$DRIVE" $B/select-drive
+          curl -s -o /dev/null -X POST --data-urlencode "path=" --data-urlencode "name=Amma" $B/create-folder
+          curl -s -o /dev/null -X POST --data-urlencode "folder=Amma" --data-urlencode "path=Amma" $B/make-qr
+          test -d "$DRIVE/Amma"
+          test "$(curl -s -o /dev/null -w '%{content_type}' "$B/qr.png?folder=Amma")" = "image/png"
+          echo "  PASS folder on disk + QR is PNG"
+
+          echo "== pair (== scanning the QR) =="
+          CFG="$HOME/Library/Application Support/BackupPetti/config.json"
+          CODE=$(python3 -c "import json,os;d=json.load(open(os.path.expanduser('$CFG')));print(next(a['code'] for a in d['accounts'] if a['path']=='Amma'))")
+          echo "  pairing code = $CODE"
+          TOKEN=$(curl -s -X POST -H 'Content-Type: application/json' -d "{\"pairingCode\":\"$CODE\"}" $B/api/pair \
+                  | python3 -c "import sys,json;print(json.load(sys.stdin)['deviceToken'])")
+          test -n "$TOKEN"
+          echo "  PASS paired, token ${TOKEN:0:12}..."
+
+          echo "== upload a photo through the file API =="
+          printf 'pretend photo %s\n' "$(date)" > holiday.jpg
+          curl -s -X POST -H "Authorization: Bearer $TOKEN" --data-binary @holiday.jpg "$B/api/upload?path=holiday.jpg"
+          test -f "$DRIVE/Amma/holiday.jpg"
+          echo "  PASS uploaded + on disk ($(wc -c < "$DRIVE/Amma/holiday.jpg" | tr -d ' ') bytes)"
+
+          echo "== unpaired request must be refused =="
+          test "$(curl -s -o /dev/null -w '%{http_code}' $B/api/list)" = 401
+          echo "  PASS no-token -> 401"
+
+          echo "==== ${{ matrix.runner }} (${{ matrix.asset }}) ALL PASS ===="
+
+      - name: Stop the agent
+        if: always()
+        run: kill "$(cat agent.pid)" 2>/dev/null || true

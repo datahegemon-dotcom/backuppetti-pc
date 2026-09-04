@@ -17,7 +17,9 @@ The green button links to the **latest GitHub Release** of the agent:
 `https://github.com/datahegemon-dotcom/backuppetti-pc/releases/latest/download/backuppetti-agent.exe`
 
 So on that same `backuppetti-pc` repo:
-1. Build the exe: (in `backuppettipc/`) `go build -o backuppetti-agent.exe ./cmd/agent`
+1. Build the binaries: (in `backuppettipc/`) `./build.sh` — it writes them to `dist/`.
+   Do NOT use a bare `go build` for Windows: the exe must be linked with
+   `-H=windowsgui`, or every owner gets a console window they cannot close.
 2. Repo → **Releases → Draft a new release** → tag e.g. `v1.0.0`.
 3. Attach **`backuppetti-agent.exe`** as a release asset → Publish.
 

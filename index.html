@@ -28,14 +28,12 @@
   .tabbar label:hover { background:#E2EDE8; }
   #tab-win:checked   ~ .tabbar label[for="tab-win"],
   #tab-linux:checked ~ .tabbar label[for="tab-linux"],
-  #tab-mac:checked   ~ .tabbar label[for="tab-mac"],
-  #tab-pi:checked    ~ .tabbar label[for="tab-pi"] {
+  #tab-mac:checked   ~ .tabbar label[for="tab-mac"] {
     background:#17A673; color:#fff; box-shadow:0 6px 16px rgba(23,166,115,.30); }
   .panel { display:none; }
   #tab-win:checked   ~ .panel-win,
   #tab-linux:checked ~ .panel-linux,
-  #tab-mac:checked   ~ .panel-mac,
-  #tab-pi:checked    ~ .panel-pi { display:block; }
+  #tab-mac:checked   ~ .panel-mac { display:block; }
 
   /* ---- download buttons ---- */
   .dl { text-align:center; margin-bottom:6px; }
@@ -108,13 +106,11 @@
         <input type="radio" name="os" id="tab-win" checked>
         <input type="radio" name="os" id="tab-linux">
         <input type="radio" name="os" id="tab-mac">
-        <input type="radio" name="os" id="tab-pi">
 
         <div class="tabbar">
           <label for="tab-win">🪟 Windows</label>
           <label for="tab-linux">🐧 Linux</label>
           <label for="tab-mac">🍎 Mac</label>
-          <label for="tab-pi">🍓 Raspberry&nbsp;Pi</label>
         </div>
 
         <!-- ===================== WINDOWS ===================== -->
@@ -157,13 +153,16 @@
               ⬇️  Download for Linux
             </a>
             <div class="free">Free · 64-bit Intel / AMD · about 40 MB</div>
+            <div class="hint" style="text-align:center">On an ARM machine instead?
+              <a href="https://github.com/datahegemon-dotcom/backuppetti-pc/releases/latest/download/backuppetti-agent-linux-arm64">Download the ARM 64-bit build</a>
+              — or just use the one command below, it picks the right one for you.</div>
           </div>
 
           <div class="easy">
             <span class="tag">Easiest</span>
             <div><b>One command — installs it and starts it on every boot.</b>
             Open a <b>Terminal</b> and paste:</div>
-            <span class="cmd">curl -fsSL https://datahegemon-dotcom.github.io/backuppetti-pc/install-pi.sh | sudo bash</span>
+            <span class="cmd">curl -fsSL https://datahegemon-dotcom.github.io/backuppetti-pc/install-linux.sh | sudo bash</span>
             Then open <code>http://localhost:8088</code> and do the three steps below. That's it.
           </div>
 
@@ -222,40 +221,6 @@
             in the drive list, type that path in Step 1.</div>
         </div>
 
-        <!-- ===================== RASPBERRY PI ===================== -->
-        <div class="panel panel-pi">
-          <div class="easy">
-            <span class="tag">Recommended</span>
-            <div><b>One command sets up everything — and the Box restarts itself after any power cut.</b></div>
-            <ol style="margin-top:10px">
-              <li>On the Pi, open a <b>Terminal</b>.</li>
-              <li>Paste this and press Enter:
-                <span class="cmd">curl -fsSL https://datahegemon-dotcom.github.io/backuppetti-pc/install-pi.sh | sudo bash</span></li>
-              <li>Open <code>http://localhost:8088</code> on the Pi — or from your phone, open
-                <code>http://&lt;the-Pi's-IP&gt;:8088</code> — and do the three steps below. 👇</li>
-            </ol>
-            <div class="hint">It installs to <code>/opt/backuppetti</code> and starts automatically on every boot.
-              Turn it off any time with <code>sudo systemctl disable --now backuppetti</code>.</div>
-          </div>
-
-          <div class="warn">
-            <b>Needs 64-bit Raspberry Pi OS.</b> Flash it with Raspberry Pi Imager, then run the command above.
-          </div>
-
-          <h3>Prefer to do it by hand?</h3>
-          <div class="dl">
-            <a class="plat" href="https://github.com/datahegemon-dotcom/backuppetti-pc/releases/latest/download/backuppetti-agent-linux-arm64"
-               style="display:inline-block">⬇️ Download the Pi program<small>ARM 64-bit · about 37 MB</small></a>
-          </div>
-          <ol style="margin-top:12px">
-            <li>Download it (button above), then in a <b>Terminal</b>:
-              <span class="cmd">cd ~/Downloads</span></li>
-            <li>Make it runnable: <span class="cmd">chmod +x backuppetti-agent-linux-arm64</span></li>
-            <li>Start it: <span class="cmd">./backuppetti-agent-linux-arm64</span></li>
-            <li>Open <code>http://localhost:8088</code> and do the three steps below.
-              <span class="hint">(This way it won't auto-start on boot — the one-command way above does.)</span></li>
-          </ol>
-        </div>
       </div><!-- /.tabs -->
 
       <!-- ===================== SHARED SETUP STEPS ===================== -->
@@ -301,15 +266,12 @@
 
         <div class="os">🐧 Linux</div>
         <div class="hint" style="margin-top:0">Open a Terminal and paste:</div>
-        <span class="cmd">curl -fsSL https://datahegemon-dotcom.github.io/backuppetti-pc/uninstall-pi.sh | sudo bash</span>
+        <span class="cmd">curl -fsSL https://datahegemon-dotcom.github.io/backuppetti-pc/uninstall-linux.sh | sudo bash</span>
 
         <div class="os">🍎 Mac</div>
         <div class="hint" style="margin-top:0">Open Terminal and paste:</div>
         <span class="cmd">curl -fsSL https://datahegemon-dotcom.github.io/backuppetti-pc/uninstall-mac.sh | bash</span>
 
-        <div class="os">🍓 Raspberry Pi</div>
-        <div class="hint" style="margin-top:0">Same as Linux — on the Pi, open a Terminal and paste:</div>
-        <span class="cmd">curl -fsSL https://datahegemon-dotcom.github.io/backuppetti-pc/uninstall-pi.sh | sudo bash</span>
 
         <div class="hint" style="margin-top:14px">✅ <b>Your backed-up files are never deleted by uninstalling.</b>
           Removing BackupPetti only clears the app, its startup entry, and which phones were paired —

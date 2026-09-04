@@ -120,9 +120,11 @@
               ⬇️  Download for Windows
             </a>
             <div class="free">Free · Windows 10 &amp; 11 · about 40 MB</div>
+            <div class="hint" style="text-align:center">Once it's running it appears in
+              <b>Settings → Installed apps</b> as <b>BackupPetti Box</b>, so you can remove it there any time.</div>
             <div class="checksum">
               SHA-256:
-              <code>ef6f247a05450fc72ea9307e0b58257babc2e2b8770f93b167093bdf03e45bbc</code>
+              <code>8aa53bd6953824719f91f2547611def0bf050e33080e452eef72e0998f4e6d43</code>
               <br><span class="how">Optional: after downloading, verify with
               <code>certutil -hashfile backuppetti-agent.exe SHA256</code> — the value must match.</span>
             </div>
@@ -259,18 +261,23 @@
         <summary>Want to remove BackupPetti?</summary>
 
         <div class="os">🪟 Windows</div>
-        <div class="hint" style="margin-top:0">Open <b>BackupPetti</b> from the Start Menu (or the desktop icon)
-          to bring up the setup page, scroll to the bottom, and click
-          <b>“🗑 Uninstall BackupPetti”</b>. It turns off auto-start, removes the shortcut, and forgets your
-          paired phones — then opens the folder with the app file so you can delete that last file.</div>
+        <div class="hint" style="margin-top:0">Either way works, whichever you reach for first:</div>
+        <div class="hint" style="margin-top:6px">• <b>Settings → Installed apps</b> → find <b>BackupPetti Box</b> → <b>Uninstall</b>
+          (also what right-clicking it in the Start Menu does).</div>
+        <div class="hint" style="margin-top:4px">• Or open <b>BackupPetti</b> from the Start Menu, scroll to the bottom of the
+          setup page and click <b>“🗑 Uninstall BackupPetti”</b>.</div>
+        <div class="hint" style="margin-top:6px">Both turn off auto-start, remove the shortcut, forget your paired phones,
+          and delete the app file itself — nothing left behind.</div>
 
         <div class="os">🐧 Linux</div>
         <div class="hint" style="margin-top:0">Open a Terminal and paste:</div>
         <span class="cmd">curl -fsSL https://datahegemon-dotcom.github.io/backuppetti-pc/uninstall-linux.sh | sudo bash</span>
+        <div class="hint">Stops the Box, removes its boot service and the installed program, and forgets your settings.</div>
 
         <div class="os">🍎 Mac</div>
         <div class="hint" style="margin-top:0">Open Terminal and paste:</div>
         <span class="cmd">curl -fsSL https://datahegemon-dotcom.github.io/backuppetti-pc/uninstall-mac.sh | bash</span>
+        <div class="hint">Stops the Box, removes the login item and the installed program, and forgets your settings.</div>
 
 
         <div class="hint" style="margin-top:14px">✅ <b>Your backed-up files are never deleted by uninstalling.</b>

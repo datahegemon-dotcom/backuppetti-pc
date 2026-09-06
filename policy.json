@@ -1,0 +1,4 @@
+{
+  "_comment": "Lowest BackupPetti phone-app versionCode still allowed to use 'back up from anywhere'. 0 means no cutoff: every build is allowed. Backing up over the home WiFi is never affected by this file. vc41 (1.40) is the first release that sends X-App-Version; older builds send nothing and count as 0, so a cutoff of 41 retires everything up to and including vc40. Raise this only once Play Billing is live and the new build is widely installed - a blocked user needs something to buy. PC agents re-read this every 30 minutes while it is non-zero, and every 6 hours while it is 0.",
+  "min_app_version_code": 0
+}
